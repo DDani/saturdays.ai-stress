@@ -23,9 +23,16 @@ The Happyforce stress question is formulated on a scale between 1 and 10, where 
 
 # Dataset:
 
-Disponemos de base de datos de Happyforce con las diferentes preguntas/indicadores que han respondido los empleados con la fecha y la compañía a la que pertenecen.
+The dataset is composed by two files, and can be found in the /data directory on this repository.
+
+This first file, scores.csv, contains all the answers to the different questions of the different dimensions measured by Happyforce (more info about the dimensions here: https://myhappyforce.com/en/measure/). The number of votes recorded is 103.330, the number of participants (employees) is 6419, while the number of companies on the file is 72. On this file, we can find what it will become our target variable: stress.
+
+Also, a second file is provided: hi.csv. This file contains the votes to the daily question "How are you today?" of the employees that have participated on any of the scores.csv. file. This file contains the 847.935 entries.
+
+PD: A first cleanup, shows that there are duplicates on each file, due the export procedure performed by Happyforce. The numbers exposed above are after droping the duplicates.
 
 # Approach:
+
 Metodología:
 
 EDA para conseguir una base con todos los indicadores disponibles a nivel empleado.
