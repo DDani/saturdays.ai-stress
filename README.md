@@ -1,8 +1,14 @@
 # Saturdays.ai Team Stress Detection.
 
-![Saturdays.ai](img/saturdays.png?raw=true)
-
 The following repository contains the final project part of Saturdays.AI (https://www.saturdays.ai/) build with other three alumni.
+
+The contribuitors of this project are:
+
+* [Jose Antonio Vives](https://www.linkedin.com/in/jose-antonio-vives-gonzalez-83724a6a/)
+* [Dani Castro Garcia](https://www.linkedin.com/in/castrodani/)
+* [Francisco Arenas Afán de Rivera](https://www.linkedin.com/in/fran-arenas-afán)
+
+
 
 # Introduction
 
@@ -66,6 +72,81 @@ By setting the threshold below 3 (included), a 50.3% of the employees have expre
 
 
 # The Approach:
+
+### EDA (Exploratory Data Analysis)
+
+Any DS project starts with data exploration, in order to find patterns and prepare the data for ML tasks. 
+
+This has been the most extensive phase of the project and one of the most critical as analyzing the data in one way or another 
+can dramatically change the strategy for applying the models to our data.
+
+The first phase, was to check the structure of the two provided files.
+
+![Happyforce](img/hf-score-questions.png?raw=true)
+
+In the `scores` dataset each record represents an employee's answer to a given question. For each record we found enough variables to identify the company, the sector to which the company belongs, the id of the question, the id of the factor to which the question is associated and the date on which the question is answered, in addition to the score answer of the employee (from 1 to 10).
+
+The `hi` dataset contains the answers to the Happyness Index. Each record represents one vote of an employee on a given date. The values of the HI range from 1 to 4, with 4 being the most positive rating.
+
+### Data preparation
+
+Both datasets are date based, and our objective was to be able to give a prediction on if a employee will suffer stress.
+
+For that to happen we needed to build a new dataset where we have all the information related to all other variables prior to the date where an employee answer to the stress question.
+
+That means (as an example):
+ * If an employee voted x on the stress question on May... how was his/her Happiness Index 3 months ago?
+ * If an employee voted x on the stress question on May... what she/he voted on any other pulse question 6 months ago? 
+
+So, we crunched the data by building a function for generate that new dataset. As result we got a Dataframe with:
+
+For each employee, that vote to the stress question on X:
+
+* For each question on the scores file, what she/he voted 2, 3 and 6 months before.
+* For each factor on the scores file, her/his average 2, 3 and 6 months before.
+* For the HI on the hi file , her/his average HI 2, 3 and 6 months before.
+
+Also we added the Industry to that new dataset.
+ 
+Finally,in order to proper work, we factorized the dataframe for prepare it for the different models, 
+and removed our target variable. Also we removed the factor that includes that question.
+
+### Looking for correlation.
+
+A first check of the correlation...
+
+![Happyforce](img/df_corr.png?raw=true)
+
+... and filtering by any variable where the correlation is between the -6% and the 6% shows that:
+
+* The Happiness Index question (in any of the different timeframes) has the biggest correlation over stress.
+* Also the following questions have also a higher correlation:
+    * The business goals and strategies set by senior leadership are taking |COMPANY_NAME| in the right direction.
+    * |COMPANY_NAME| communicates in a clear and effective way us.
+    * I trust that the people I work with are committed to do a good job
+    * On a scale from 0-10, how would you rate the benefits |COMPANY_NAME| offers?
+    * On a scale from 1 to 10, how likely are you to recommend |COMPANY_NAME| as good place to work?
+    * I would rate the processes for determining pay in |COMPANY_NAME| as:
+    * I would rate the amount of resources, people and efforts that |COMPANY_NAME| invests to achieve its goals as:
+    * My teammates, welcome opinions different from their own.
+    * Do you have the tools and resources you need to do your job?
+
+* Employees working on FINANCIAL_SERVICES_INSURANCE seems to reflect more stress than others. On the other hand, 
+MANAGMENT_CONSULTING and COMPUTER_SOFTWARE_IT_SERVICES have a negative correlation which shows that they suffer less stress.
+
+# Modeling
+
+With the data ready for the game, we deceided to focus on supervised algorithms:
+
+* Decision tree.
+* Random forest.
+* Logistic Regression.
+
+### Decision Tree
+
+### Random Forest
+
+### Logistic Regression
 
 EDA para conseguir una base con todos los indicadores disponibles a nivel empleado.
 
