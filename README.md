@@ -112,6 +112,20 @@ Also we added the Industry to that new dataset.
 Finally,in order to proper work, we factorized the dataframe for prepare it for the different models, 
 and removed our target variable. Also we removed the factor that includes that question.
 
+### A first look
+
+One first review of the categorized data shows quite interesting results:
+
+![Happyforce](img/stress_per_sector.png?raw=true)
+
+By sectors, the NATURAL_RESOURCES is the one where employees express higher levels of stress. 
+However the number of employees is low compared with FINANCIAL_SERVICES_INSURANCE, where is also high and the number of participants is bigger.
+
+In any case, in all sectors the 40% of the employees show high levels of stress. Surprisingly :-), 
+COMPUTER_SOFTWARE_IT_SERVICES is the last on that range, with a 42% of employees showing some level of stress.
+
+One last lesson: if you want a quite life, move to MANAGEMENT_CONSULTING.
+
 ### Looking for correlation.
 
 A first check of the correlation...
