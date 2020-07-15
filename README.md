@@ -1,5 +1,7 @@
 # Saturdays.ai Team Stress Detection.
 
+![Saturdays.ai](img/saturdays.png?raw=true)
+
 The following repository contains the final project part of Saturdays.AI (https://www.saturdays.ai/) build with other three alumni.
 
 # Introduction
@@ -125,6 +127,16 @@ https://medium.com/machine-learning-for-humans/unsupervised-learning-f4558758829
 
 
 # The Outcomes & Next steps:
+
+### The Sample project
+
+Under the app directory, you will find a [Streamlit](https://www.streamlit.io) demp app that calculates 
+the probability of suffer stress on the following months. 
+
+The app uses the persisted generated model of the Random Forest Classifier that you can find on the [notebook](stress_study.ipynb)
+
+
+### The Future for Happyforce
 
 Traditionally the results of any employee surveys, purse surveys are left just the table of HR or managers.
 No outcomes but action plans that are not always fulfilled or have an impact on employees.
