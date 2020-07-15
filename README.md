@@ -2,24 +2,25 @@
 
 The following repository contains the final project part of Saturdays.AI (https://www.saturdays.ai/) build with other three alumni.
 
-The contribuitors of this project are:
+The contributors of this project are:
 
 * [Jose Antonio Vives](https://www.linkedin.com/in/jose-antonio-vives-gonzalez-83724a6a/)
-* [Dani Castro Garcia](https://www.linkedin.com/in/castrodani/)
 * [Francisco Arenas Afán de Rivera](https://www.linkedin.com/in/fran-arenas-afán)
+* [Jaume Pardo Socias](https://www.linkedin.com/in/jaume-pardo-socias-4a9173192/)
+* [Dani Castro Garcia](https://www.linkedin.com/in/castrodani/)
 
 
 
 # Introduction
 
-Happyforce (www.myhappyforce.com) is a Employee Engagement platform used by companies to measure the level of engagement of their employees, allowing managers and teams to improve in order to improve, motivate and retain talent.
+Happyforce (www.myhappyforce.com) is a Employee Engagement platform used by companies to measure the level of engagement of their employees, allowing managers and teams to improve, motivate and retain talent.
 
 Unlike a climate survey (which is usually annual), Happyforce carries out a continuous measurements of different employee engagement dimensions (https://en.wikipedia.org/wiki/Employee_engagement) via pulse surveys and a daily check-in question.
 
 ![Happyforce](img/hf-app.png?raw=true)
 
 
-This provides and unvaluable dataset for research correlation and predictions based on previous gathered data.
+This provides and amazing dataset for research correlation and predictions based on previous gathered data.
 
 Inside all dimensions measured by Happyforce, there is one that is a perfect match for the values that we must chase on a Saturday.ai project: a social aspect. 
 
@@ -119,7 +120,7 @@ A first check of the correlation...
 
 ... and filtering by any variable where the correlation is between the -6% and the 6% shows that:
 
-* The Happiness Index question (in any of the different timeframes) has the biggest correlation over stress.
+* The Happiness Index question (in any of the different time-frames) has the biggest correlation over stress.
 * Also the following questions have also a higher correlation:
     * The business goals and strategies set by senior leadership are taking |COMPANY_NAME| in the right direction.
     * |COMPANY_NAME| communicates in a clear and effective way us.
@@ -190,24 +191,45 @@ We decided to check what happens if we build a Random Forest only with those var
 
 Our final try was try to predict using a Logistic Regression. 
 
-The first approach was to build a Logistic Regressor classifier using only the best features detected on the Random Forest model
+The first approach was to build a Logistic Regressor classifier using only the best features detected on the Random Forest model.
 
-TODO
+![Logistic Regression](img/logistic_regression_variables.png?raw=true)
 
+After fitting our model, we found that the p-values of many variables are smaller than 0.05, so we dropped them.
 
-### Others
+The resulting model has a precision of **0.612**.
 
-Clustering & KMeans: TODO
+On this model, beside the HI of 3 moths before, and those industries:
 
-Random forest
-https://towardsdatascience.com/understanding-random-forest-58381e0602d2
-https://towardsdatascience.com/decision-tree-and-random-forest-explained-8d20ddabc9dd
-https://www.analyticsvidhya.com/blog/2016/04/tree-based-algorithms-complete-tutorial-scratch-in-python/#nine
+* COMPUTER_SOFTWARE_IT_SERVICES
+* FINANCIAL_SERVICES_INSURANCE
+* NATURAL_RESOURCES
 
-Cluster
-https://www.aprendemachinelearning.com/k-means-en-python-paso-a-paso/
-https://medium.com/machine-learning-for-humans/unsupervised-learning-f45587588294
+was quite interesting to see that the following questions:
 
+![Logistic Regression](img/regression_impact_variables.png?raw=true)
+
+have an higher impact on the prediction. By revisiting again the initial image of which factors or conditions affect to work related stress, we identify some of them.
+
+Empowered by those results, and due previous results, we built a second model, using those variables: 
+
+* COMPUTER_SOFTWARE_IT_SERVICES
+* FINANCIAL_SERVICES_INSURANCE
+* month_1
+* month_3
+* vote_hi_M6_99_cat
+* vote_26_q_M6_99_cat
+* vote_44_q_M6_99_cat
+* NON_PROFIT_ORGANIZATION
+
+The result was a little bit higher than the previous model **0.622**
+
+Comparing the confusion matrix of the first iteration vs the second one:
+
+* First: array([[138,  55], [ 90,  94]])
+* Second: array([[130,  63], [ 83, 101]])
+
+We can see that our first model predicts a little bit better.
 
 # The Outcomes & Next steps:
 
@@ -236,3 +258,16 @@ One of the best outcomes of this project may be the inclusion of these models in
 
 ![Happyforce](img/happyforce-me.png?raw=true)
 
+
+# Bibliography
+
+Random forest
+
+https://towardsdatascience.com/understanding-random-forest-58381e0602d2
+https://towardsdatascience.com/decision-tree-and-random-forest-explained-8d20ddabc9dd
+https://www.analyticsvidhya.com/blog/2016/04/tree-based-algorithms-complete-tutorial-scratch-in-python/#nine
+
+Cluster
+
+https://www.aprendemachinelearning.com/k-means-en-python-paso-a-paso/
+https://medium.com/machine-learning-for-humans/unsupervised-learning-f45587588294
