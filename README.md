@@ -144,7 +144,7 @@ Do you see a relation between the causes of stress and the answers on the datase
 
 # Modeling
 
-With the data ready for the game, we deceided to focus on supervised algorithms:
+With the data ready for the game, we decided to focus on supervised algorithms:
 
 * Decision tree.
 * Random forest.
@@ -152,59 +152,53 @@ With the data ready for the game, we deceided to focus on supervised algorithms:
 
 ### Decision Tree
 
+Although is the simplest model, it's enough powerful in most of the cases. 
+
+In order to find the best combination of hyper-parameters, we performed a Grid Search over Scikit `DesicionTreeClassifier` 
+to tune the deep ('max_depth') and the number of features ('max_features') finding that with:
+
+* max_depth=2
+* max_features=19
+
+we achieve a accuracy of 0.5782
+
+![Decission Tree](img/decission_tree.png?raw=true)
+
 ### Random Forest
+
+With the objective of looking for better results we gave it a try to the Random Forest model; 
+We performed the same approach: a Grid Search, giving as result that the best hyper-parameters are:
+
+* max_depth=110
+* n_estimators=130
+* min_samples_leaf=2
+* min_samples_split=40
+* max_leaf_nodes=35
+
+we achieve a accuracy of 0.5889
+
+One of the advantages of the Random Forest is that we can obtain which features are more relevant in the prediction of the objective variable
+In our case, we found:
+
+
+![Random Forest](img/random_forest_variable_importance.png?raw=true)
+
+We decided to check what happens if we build a Random Forest only with those variable, without getting better results.
+
 
 ### Logistic Regression
 
-EDA para conseguir una base con todos los indicadores disponibles a nivel empleado.
+Our final try was try to predict using a Logistic Regression. 
 
-Intentaremos identificar los factores principales con RandomForest.
+The first approach was to build a Logistic Regressor classifier using only the best features detected on the Random Forest model
 
-Random Forest
-El random forest es una metodología de clasificación que consiste en la combinación de árboles de decisión que actúan como un conjunto. El concepto es simple pero potente. Un número elevado de modelos (árboles) no correlacionados entre sí y utilizados de forma paralela, nos asegura, en principio, un resultado generalizado.
-
-Feature Importance
+TODO
 
 
-Hiperparámetros
+### Others
 
+Clustering & KMeans: TODO
 
-Cluster
-
-
-
-
-Regresión
-
-
-
-Red Neuronal
-
-
-Resultados
-
-
-
-Conclusiones
-
-
-
-
-
-
-
-Looking correlation:
-
-1- Vamos a construir un dataset, que dada la variable objetiva (Stress), tiene para cada empleado como era su HI:
-	HI -> el mes anterior.
-	HI -> tres meses.
-	HI -> seis meses.
-
-* companyId, sector, stress, promedio HI último 3 meses, promedio 6 meses, promedio 12 meses
-
-Vamos  iterar sobre este concepto, buscando correlaciones o clusters entre estas features
-
-Bibliografía
 Random forest
 https://towardsdatascience.com/understanding-random-forest-58381e0602d2
 https://towardsdatascience.com/decision-tree-and-random-forest-explained-8d20ddabc9dd
