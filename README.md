@@ -101,6 +101,7 @@ Conclusiones
 
 
 
+
 Looking correlation:
 
 1- Vamos a construir un dataset, que dada la variable objetiva (Stress), tiene para cada empleado como era su HI:
@@ -121,3 +122,22 @@ https://www.analyticsvidhya.com/blog/2016/04/tree-based-algorithms-complete-tuto
 Cluster
 https://www.aprendemachinelearning.com/k-means-en-python-paso-a-paso/
 https://medium.com/machine-learning-for-humans/unsupervised-learning-f45587588294
+
+
+# The Outcomes & Next steps:
+
+Traditionally the results of any employee surveys, purse surveys are left just the table of HR or managers.
+No outcomes but action plans that are not always fulfilled or have an impact on employees.
+
+But... 
+
+What if we were able to give value to employees automatically to all the contributions they make in surveys or pulses?
+Or if we were able to tell a particular employee what will "hurt" him or her in the future, and how to act before it happens?
+
+The practical implications of this project are much broader than stress. In the employee's day-to-day life, and throughout our professional career
+we live hundreds of situations and feelings that we have to face, and skills (soft skills) to develop or improve.
+
+One of the best outcomes of this project may be the inclusion of these models in Happyforce, thus supporting its mission of helping employees and organizations to be better, and impacting directly on employees life.
+
+![Happyforce](img/happyforce-me.png?raw=true)
+
