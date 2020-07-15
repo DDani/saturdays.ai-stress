@@ -134,6 +134,14 @@ A first check of the correlation...
 * Employees working on FINANCIAL_SERVICES_INSURANCE seems to reflect more stress than others. On the other hand, 
 MANAGMENT_CONSULTING and COMPUTER_SOFTWARE_IT_SERVICES have a negative correlation which shows that they suffer less stress.
 
+
+**Note:** Do you remember the image above? go and check it again: 
+* Salary & Benefits is the cause number one of stress.
+* Lack of alignment (goals, trust in coworkers, inclusion...)
+* Tools & Resources...
+
+Do you see a relation between the causes of stress and the answers on the dataset? ;-)
+
 # Modeling
 
 With the data ready for the game, we deceided to focus on supervised algorithms:
