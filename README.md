@@ -8,32 +8,62 @@ Happyforce (www.myhappyforce.com) is a Employee Engagement platform used by comp
 
 Unlike a climate survey (which is usually annual), Happyforce carries out a continuous measurements of different employee engagement dimensions (https://en.wikipedia.org/wiki/Employee_engagement) via pulse surveys and a daily check-in question.
 
+![Happyforce](img/hf-app.png?raw=true)
+
+
 This provides and unvaluable dataset for research correlation and predictions based on previous gathered data.
 
 Inside all dimensions measured by Happyforce, there is one that is a perfect match for the values that we must chase on a Saturday.ai project: a social aspect. 
-This dimension is Employee Stress. Stress has been described as the health epidemic of the 21th century.
 
-# Challenge and objetive:
+![Happyforce](img/indicadores-happyforce.png?raw=true)
 
-With this project we will try to determine which variables mainly affect to employee's stress, and we will try to build a model for predicting when an employee will suffer stress on the following months.
+This dimension is **Employee Stress**.
 
-# Definitions:
+### Challenge and objective:
 
-The Happyforce stress question is formulated on a scale between 1 and 10, where 1 is high stressed and 10 is low stressed. We will set the threshold below 3 (included), to determine when an employee is stressed or not.
+Stress has been described as the health epidemic of the 21th century.
 
-# Dataset:
+![Imagen 1](img/stress-img.png?raw=true)
+
+Being the workplace as one of the biggest source of stress:
+
+![Imagen 2](img/workplace-stress.jpg?raw=true)
+
+
+**With this project we will try to determine which variables mainly affect to employee's stress**, and we will try to build a model for predicting when an employee will suffer stress on the following months.
+
+
+# The Dataset:
 
 The dataset is composed by two files, and can be found in the /data directory on this repository.
 
-This first file, scores.csv, contains all the answers to the different questions of the different dimensions measured by Happyforce (more info about the dimensions here: https://myhappyforce.com/en/measure/). The number of votes recorded is 103.330, the number of participants (employees) is 6419, while the number of companies on the file is 72. On this file, we can find what it will become our target variable: stress.
+This first file, `scores.csv`, contains all the answers to the different questions of the different dimensions measured by Happyforce (more info about the dimensions here: https://myhappyforce.com/en/measure/). The number of votes recorded is 103.330, the number of participants (employees) is 6419, while the number of companies on the file is 72. On this file, we can find what it will become our target variable: stress.
 
-Also, a second file is provided: hi.csv. This file contains the votes to the daily question "How are you today?" of the employees that have participated on any of the scores.csv. file. This file contains the 847.935 entries.
+Also, a second file is provided: `hi.csv`. This file contains the votes to the daily question "How are you today?" of the employees that have participated on any of the scores.csv. file. This file contains the 847.935 entries.
 
-PD: A first cleanup, shows that there are duplicates on each file, due the export procedure performed by Happyforce. The numbers exposed above are after droping the duplicates.
+_PD: A first cleanup, shows that there are duplicates on each file, due the export procedure performed by Happyforce. The numbers exposed above are after droping the duplicates._
 
-# Approach:
 
-Metodología:
+# The Definitions:
+
+The Happyforce stress question is formulated on a scale between 1 and 10, where 1 is high stressed and 10 is low stressed. 
+
+Knowing that, the first decision we took is to define what is an stressed employee. Based on the answers to the question:
+
+**"On a scale from 1 to 10, how would you rate the work-related stress?"**
+
+![Happyforce](img/stress_votes_distribution.png?raw=true)
+
+We divided the scale in three as:
+
+ - 1-3 stressed
+ - 4-6 neutral
+ - 7-10 not stressed.
+ 
+By setting the threshold below 3 (included), a 50.3% of the employees have expressed at some point that they felt stressed, which gives us a balanced dataset.
+
+
+# The Approach:
 
 EDA para conseguir una base con todos los indicadores disponibles a nivel empleado.
 
