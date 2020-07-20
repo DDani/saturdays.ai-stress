@@ -66,8 +66,7 @@ Knowing that, the first decision we took is to define what is an stressed employ
 We divided the scale in three as:
 
  - 1-3 stressed
- - 4-6 neutral
- - 7-10 not stressed.
+ - 4-10 not stressed.
  
 By setting the threshold below 3 (included), a 50.3% of the employees have expressed at some point that they felt stressed, which gives us a balanced dataset.
 
@@ -96,8 +95,8 @@ Both datasets are date based, and our objective was to be able to give a predict
 For that to happen we needed to build a new dataset where we have all the information related to all other variables prior to the date where an employee answer to the stress question.
 
 That means (as an example):
- * If an employee voted x on the stress question on May... how was his/her Happiness Index 3 months ago?
- * If an employee voted x on the stress question on May... what she/he voted on any other pulse question 6 months ago? 
+ * If an employee voted x on the stress question on May... how was his/her Happiness Index the last 3 months?
+ * If an employee voted x on the stress question on May... what she/he voted on any other pulse question the last 6 months? 
 
 So, we crunched the data by building a function for generate that new dataset. As result we got a Dataframe with:
 
@@ -107,7 +106,17 @@ For each employee, that vote to the stress question on X:
 * For each factor on the scores file, her/his average 2, 3 and 6 months before.
 * For the HI on the hi file , her/his average HI 2, 3 and 6 months before.
 
-Also we added the Industry to that new dataset.
+The feature names are builded with this rules:
+
+"vote_ " + id_question + '_q_' + 'MX' + '_Y_' for the questions.
+
+"vote_ " + id_factor + '_f_' + 'MX' + '_Y_' for the factors.
+
+where X is the number of months that we consider before the stress question and Y is the months that we use to work out the mean. If we want to use only the month 6 before the stress question we will use X=6 and Y=1. If we want to use all 6 months before the stress question we will use X=6 and Y=99 (we parametrised the whole period with a 99).
+
+Due to the missing values, we finally used the whole period option (Y=99), because we have more data to make a prediction.
+
+Also we added the Industry and the month when the stress question was answered to that new dataset.
  
 Finally,in order to proper work, we factorized the dataframe for prepare it for the different models, 
 and removed our target variable. Also we removed the factor that includes that question.
@@ -121,7 +130,7 @@ One first review of the categorized data shows quite interesting results:
 By sectors, the NATURAL_RESOURCES is the one where employees express higher levels of stress. 
 However the number of employees is low compared with FINANCIAL_SERVICES_INSURANCE, where is also high and the number of participants is bigger.
 
-In any case, in all sectors the 40% of the employees show high levels of stress. Surprisingly :-), 
+In any case, in most sectors the 40% of the employees show high levels of stress. Surprisingly :-), 
 COMPUTER_SOFTWARE_IT_SERVICES is the last on that range, with a 42% of employees showing some level of stress.
 
 One last lesson: if you want a quite life, move to MANAGEMENT_CONSULTING.
@@ -195,23 +204,21 @@ we achieve a accuracy of 0.5889
 One of the advantages of the Random Forest is that we can obtain which features are more relevant in the prediction of the objective variable
 In our case, we found:
 
-
 ![Random Forest](img/random_forest_variable_importance.png?raw=true)
 
 We decided to check what happens if we build a Random Forest only with those variable, without getting better results.
-
 
 ### Logistic Regression
 
 Our final try was try to predict using a Logistic Regression. 
 
-The first approach was to build a Logistic Regressor classifier using only the best features detected on the Random Forest model.
+The first approach was to build a Logistic Regressor classifier using only the best features detected on the Random Forest model. Obviously, there are a lot of features and the p-vales are too big.
 
-![Logistic Regression](img/logistic_regression_variables.png?raw=true)
+We found out a feature combination where the p-values are smaller than 0.05. The result of the model is:
 
-After fitting our model, we found that the p-values of many variables are smaller than 0.05, so we dropped them.
+![Logistic Regression](img/regresion1.png?raw=true)
 
-The resulting model has a precision of **0.612**.
+The resulting model has a precision of **0.615**.
 
 On this model, beside the HI of 3 moths before, and those industries:
 
@@ -221,7 +228,7 @@ On this model, beside the HI of 3 moths before, and those industries:
 
 was quite interesting to see that the following questions:
 
-![Logistic Regression](img/regression_impact_variables.png?raw=true)
+![Logistic Regression](img/regression_impact_variables1.png?raw=true)
 
 have an higher impact on the prediction. By revisiting again the initial image of which factors or conditions affect to work related stress, we identify some of them.
 
@@ -238,6 +245,8 @@ Empowered by those results, and due previous results, we built a second model, u
 
 The result was a little bit higher than the previous model **0.622**
 
+![Logistic Regression](img/regresion2.png?raw=true)
+
 Comparing the confusion matrix of the first iteration vs the second one:
 
 * First: array([[138,  55], [ 90,  94]])
@@ -245,12 +254,32 @@ Comparing the confusion matrix of the first iteration vs the second one:
 
 We can see that our first model predicts a little bit better.
 
+To conclude our model analysis, we studied how important are each feature in our models.
+
+For the model 1
+
+![Logistic Regression](img/pesos1.png?raw=true)
+
+we can see the most important feature are if the employee works in a NATURAL_RESOURCES company (33%). The second feature is the question "I trust that the people I work with are committed to do a good job" (20%) and the thirth one is the 3 months happiness index (11%).
+
+It's important to note that more than 40% of the prediction depends on the company industry and a 6% depends on the month when you are. The other half of the prediction is influenced by the team confidence, the manager lead, the resourses and the mastery (apart from happiness index). 
+
+For the model 2
+
+![Logistic Regression](img/pesos2.png?raw=true)
+
+we can see the most important feature are if the employee works in a NON_PROFIT_ORGANIZATION company (20%). The second feature is the 6 month happiness index (18%) and the thirth one is the question "The business goals and strategies set by senior leadership are taking *|COMPANY_NAME|* in the right direction." (17%).
+
+In that case, the model have a 35% of dependences on the company industry, 40% on the questions and more than 20% of the prediction depends on the month of the stress question. 
+
+We can see how in January there are more stress and in March less than the other months (look at the coefficients). In addition, the model coefficients reflects correcly the behaviour observed in the EDA and in the correlation analysis, where we saw that computer_software_it_services and non_profit_organization are the sectors with less percentage of stress (behind the mean).
+
 # The Outcomes & Next steps:
 
 ### The Sample project
 
 Under the app directory, you will find a [Streamlit](https://www.streamlit.io) demp app that calculates 
-the probability of suffer stress on the following months. 
+the probability of suffer stress on the next month. 
 
 The app uses the persisted generated model of the Random Forest Classifier that you can find on the [notebook](stress_study.ipynb)
 
@@ -280,8 +309,3 @@ Random forest
 https://towardsdatascience.com/understanding-random-forest-58381e0602d2
 https://towardsdatascience.com/decision-tree-and-random-forest-explained-8d20ddabc9dd
 https://www.analyticsvidhya.com/blog/2016/04/tree-based-algorithms-complete-tutorial-scratch-in-python/#nine
-
-Cluster
-
-https://www.aprendemachinelearning.com/k-means-en-python-paso-a-paso/
-https://medium.com/machine-learning-for-humans/unsupervised-learning-f45587588294
